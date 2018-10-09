@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './detail.dart';
+import './user.dart';
 
 import 'package:lpinyin/lpinyin.dart';
 import 'package:badges/badges.dart';
@@ -286,7 +287,10 @@ class IndexState extends State<Index> {
                                     image: avatar)
                                 .image,
                             backgroundColor: Colors.white),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => User(item['id'])));
+                        },
                       ),
                       title: Text('${item['title']} [${item['author']}]'),
                       subtitle: Text(
