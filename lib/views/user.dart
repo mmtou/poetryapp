@@ -106,7 +106,7 @@ class _UserState extends State<User> {
                         ),
                         Padding(
                           padding: EdgeInsets.only(
-                            right: 5.0,
+                            right: 3.0,
                           ),
                         ),
                         Transform(
@@ -204,7 +204,7 @@ class _UserState extends State<User> {
                                 onLongPress: () {},
                                 dense: true,
                                 contentPadding:
-                                    EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
+                                    EdgeInsets.fromLTRB(0.0, 0.0, 5.0, 0.0),
                               ),
                               decoration: BoxDecoration(
                                 border: Border(
