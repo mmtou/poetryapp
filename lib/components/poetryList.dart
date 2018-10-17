@@ -6,13 +6,13 @@ import '../views/user.dart';
 
 class PoetryList extends StatefulWidget {
   final keyword;
+  final authorId;
 
-  PoetryList({this.keyword = ''});
+  PoetryList({this.keyword = '', this.authorId});
 
   @override
   State<StatefulWidget> createState() {
-    print('aaaaa ${keyword}');
-    return _PoetryListState(keyword);
+    return _PoetryListState(keyword, authorId);
   }
 }
 
@@ -26,8 +26,9 @@ class _PoetryListState extends State<PoetryList> {
   var _pageNo = 1;
 
   var _keyword;
+  var _authorId;
 
-  _PoetryListState(this._keyword);
+  _PoetryListState(this._keyword, this._authorId);
 
   @override
   void initState() {
@@ -81,8 +82,12 @@ class _PoetryListState extends State<PoetryList> {
   }
 
   Future<List> _pull() async {
-    Map response = await HttpClient.get(
-        '/api/poetry/list?orderField=1&page.pageNo=${_pageNo}&keyword=${_keyword}');
+    var uri =
+        '/api/poetry/list?orderField=1&page.pageNo=${_pageNo}&keyword=${_keyword}';
+    if (_authorId != null) {
+      uri = '${uri}&authorId=${_authorId}';
+    }
+    Map response = await HttpClient.get(uri);
     return response['result'];
   }
 
@@ -112,17 +117,23 @@ class _PoetryListState extends State<PoetryList> {
 
                   return Container(
                     child: ListTile(
-                      leading: GestureDetector(
-                        child: CircleAvatar(
-                            backgroundImage: avatar != null
-                                ? Image.network(avatar).image
-                                : Image.asset('assets/defaultAvatar.png').image,
-                            backgroundColor: Colors.white),
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => User(item['id'])));
-                        },
-                      ),
+                      leading: _authorId != null
+                          ? null
+                          : GestureDetector(
+                              child: CircleAvatar(
+                                  backgroundImage: avatar != null
+                                      ? Image.network(
+                                              'https://poetry.mmtou.xyz${avatar}')
+                                          .image
+                                      : Image.asset('assets/defaultAvatar.png')
+                                          .image,
+                                  backgroundColor: Colors.white),
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        User(item['authorId'])));
+                              },
+                            ),
                       title: Text('${item['title']} [${item['authorName']}]'),
                       subtitle: Text(
                         item['content'],
