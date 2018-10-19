@@ -28,6 +28,15 @@ class SearchState extends State<Search> {
       appBar: AppBar(
         title: TextField(
           controller: searchController,
+          decoration: InputDecoration(
+            hintText: '搜索',
+            hintStyle: TextStyle(
+              color: Theme.of(context).scaffoldBackgroundColor,
+            ),
+          ),
+          style: TextStyle(
+            color: Theme.of(context).scaffoldBackgroundColor,
+          ),
         ),
         leading: IconButton(
             icon: Icon(Icons.arrow_back),

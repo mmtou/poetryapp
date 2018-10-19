@@ -14,6 +14,8 @@ class Index extends StatefulWidget {
 class IndexState extends State<Index> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  var _username;
+
   @override
   void initState() {
     super.initState();
@@ -27,56 +29,98 @@ class IndexState extends State<Index> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          title: Text('小流'),
-          leading: BadgeIconButton(
-              itemCount: 1,
-              icon: Icon(Icons.menu),
-              onPressed: () => _scaffoldKey.currentState.openDrawer()),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.search),
-              tooltip: 'search',
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => Search()));
-              },
+      key: _scaffoldKey,
+      appBar: AppBar(
+        title: Text('咫尺'),
+        leading: BadgeIconButton(
+            itemCount: 1,
+            icon: Icon(Icons.menu),
+            onPressed: () => _scaffoldKey.currentState.openDrawer()),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            tooltip: 'search',
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Search()));
+            },
+          ),
+        ],
+        elevation: 0.0,
+      ),
+      body: PoetryList(),
+      drawer: Container(
+        child: ListView(
+          children: <Widget>[
+            _username == null
+                ? Container(
+                    child: Center(
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            '不积跬步无以至千里，不积小流无以成江海',
+                            style: TextStyle(
+                              height: 2,
+                              color: Colors.white,
+                            ),
+                          ),
+                          OutlineButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed('/login');
+                            },
+                            child: Text(
+                              '立即登录',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    padding: EdgeInsets.only(
+                      top: 56.0,
+                      bottom: 12.0,
+                    ),
+                  )
+                : UserAccountsDrawerHeader(
+                    accountName: Text("mmtou"),
+                    accountEmail: Text("不积跬步无以至千里，不积小流无以成江海"),
+                    currentAccountPicture: CircleAvatar(
+                      backgroundImage: AssetImage("assets/defaultAvatar.png"),
+                    ),
+                    onDetailsPressed: () {},
+                  ),
+            ListTile(
+              title: Text('我的消息'),
+              leading: Icon(Icons.mail_outline),
+              onTap: () {},
             ),
+            ListTile(
+              title: Text('个性换肤'),
+              leading: Icon(Icons.color_lens),
+              onTap: () {},
+            ),
+            ListTile(
+              title: Text('设置'),
+              leading: Icon(Icons.settings),
+              onTap: () {},
+            ),
+            ListTile(
+              title: Text('退出'),
+              leading: Icon(Icons.power_settings_new),
+              onTap: () {},
+            )
           ],
-          elevation: 0.0,
+          padding: EdgeInsets.only(),
         ),
-        body: PoetryList(),
-        drawer: Drawer(
-            child: ListView(children: <Widget>[
-          UserAccountsDrawerHeader(
-            accountName: Text("mmtou"),
-            accountEmail: Text("不积跬步无以至千里，不积小流无以成江海"),
-            currentAccountPicture: CircleAvatar(
-              backgroundImage: AssetImage("assets/defaultAvatar.png"),
-            ),
-            onDetailsPressed: () {},
-          ),
-          ListTile(
-            title: Text('我的消息'),
-            leading: Icon(Icons.mail_outline),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Text('个性换肤'),
-            leading: Icon(Icons.color_lens),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Text('设置'),
-            leading: Icon(Icons.settings),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Text('退出'),
-            leading: Icon(Icons.power_settings_new),
-            onTap: () {},
-          )
-        ])));
+        width: MediaQuery.of(context).size.width * 0.9,
+//        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+        ),
+      ),
+    );
   }
 }

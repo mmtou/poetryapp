@@ -157,6 +157,7 @@ class _PoetryListState extends State<PoetryList> {
                 }
               },
               controller: _scrollController,
+              padding: EdgeInsets.only(),
             ),
             onRefresh: _refresh,
           );
