@@ -16,7 +16,7 @@ class PoetryList extends StatefulWidget {
   }
 }
 
-class _PoetryListState extends State<PoetryList> {
+class _PoetryListState extends State<PoetryList> with AutomaticKeepAliveClientMixin {
   ScrollController _scrollController = ScrollController();
   var _load = false;
   var _inited = false;
@@ -162,4 +162,8 @@ class _PoetryListState extends State<PoetryList> {
             onRefresh: _refresh,
           );
   }
+
+  // TODO: implement wantKeepAlive
+  @override
+  bool get wantKeepAlive => true;
 }

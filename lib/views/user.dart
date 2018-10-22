@@ -25,9 +25,12 @@ class _UserState extends State<User> {
 
   var _detail = {};
 
+  var _dynamics = [];
+
   @override
   void initState() {
     _get();
+    _getDynamics();
 
     super.initState();
   }
@@ -37,6 +40,18 @@ class _UserState extends State<User> {
     setState(() {
       this._detail = response['result'];
       _inited = true;
+    });
+  }
+
+  Future<Null> _getDynamics() async {
+    setState(() {
+      this._dynamics = [
+        {'time': '昨天', 'content': '安得广厦千万间，大庇天下寒士俱欢颜。'},
+        {'time': '昨天', 'content': '安得广厦千万间，大庇天下寒士俱欢颜。'},
+        {'time': '昨天', 'content': '安得广厦千万间，大庇天下寒士俱欢颜。'},
+        {'time': '昨天', 'content': '安得广厦千万间，大庇天下寒士俱欢颜。'},
+        {'time': '昨天', 'content': '安得广厦千万间，大庇天下寒士俱欢颜。'},
+      ];
     });
   }
 
@@ -115,11 +130,12 @@ class _UserState extends State<User> {
                         mainAxisAlignment: MainAxisAlignment.end,
                       ),
                       decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(
-                              'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539081659583&di=5f3da366900d9e5c0229f6d429ac8d46&imgtype=0&src=http%3A%2F%2Fimg.tupianzj.com%2Fuploads%2FBizhi%2Fby6_19201.jpg',
-                            ),
-                            fit: BoxFit.fill),
+//                        image: DecorationImage(
+//                            image: NetworkImage(
+//                              'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539081659583&di=5f3da366900d9e5c0229f6d429ac8d46&imgtype=0&src=http%3A%2F%2Fimg.tupianzj.com%2Fuploads%2FBizhi%2Fby6_19201.jpg',
+//                            ),
+//                            fit: BoxFit.fill),
+                        color: Theme.of(context).primaryColor,
                       ),
                       height: 270.0,
                       width: MediaQuery.of(context).size.width,
@@ -171,7 +187,31 @@ class _UserState extends State<User> {
                               PoetryList(
                                 authorId: _id,
                               ),
-                              Text('动态'),
+                              ListView.builder(
+                                itemCount: _dynamics.length,
+                                itemBuilder: (context, index) {
+                                  var dynamic = _dynamics[index];
+                                  return Container(
+                                    child: ListTile(
+                                      leading: CircleAvatar(
+                                        backgroundImage: NetworkImage(
+                                            'https://poetry.mmtou.xyz/${_detail['avatar']}'),
+                                      ),
+                                      title: Text(_detail['name']),
+                                      subtitle: Text(dynamic['content']),
+                                    ),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: Colors.grey,
+                                          width: 0.3,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                padding: EdgeInsets.only(),
+                              ),
                               Container(
                                 child: Text(
                                   _detail['description'],

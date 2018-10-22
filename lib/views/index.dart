@@ -11,7 +11,7 @@ class Index extends StatefulWidget {
   }
 }
 
-class IndexState extends State<Index> {
+class IndexState extends State<Index> with AutomaticKeepAliveClientMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   var _username;
@@ -49,7 +49,7 @@ class IndexState extends State<Index> {
         elevation: 0.0,
       ),
       body: PoetryList(),
-      drawer: Container(
+      drawer: Drawer(
         child: ListView(
           children: <Widget>[
             _username == null
@@ -95,7 +95,19 @@ class IndexState extends State<Index> {
             ListTile(
               title: Text('我的消息'),
               leading: Icon(Icons.mail_outline),
-              onTap: () {},
+              trailing: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(50.0),
+                  ),
+                  color: Colors.red,
+                ),
+                width: 6.0,
+                height: 6.0,
+              ),
+              onTap: () {
+                Navigator.of(context).pushNamed('/message');
+              },
             ),
             ListTile(
               title: Text('个性换肤'),
@@ -115,12 +127,11 @@ class IndexState extends State<Index> {
           ],
           padding: EdgeInsets.only(),
         ),
-        width: MediaQuery.of(context).size.width * 0.9,
-//        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
-        ),
       ),
     );
   }
+
+  // TODO: implement wantKeepAlive
+  @override
+  bool get wantKeepAlive => true;
 }

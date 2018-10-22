@@ -10,6 +10,8 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   var _username;
 
+  var _showPassword = true;
+
   @override
   void initState() {
     super.initState();
@@ -46,6 +48,7 @@ class _LoginState extends State<Login> {
                 prefixIcon: Icon(Icons.phone_android),
               ),
               keyboardType: TextInputType.phone,
+              maxLength: 11,
             ),
             padding: EdgeInsets.fromLTRB(24.0, 56.0, 24.0, 0.0),
           ),
@@ -53,11 +56,21 @@ class _LoginState extends State<Login> {
             child: TextField(
               decoration: InputDecoration(
 //                  labelText: '手机号',
-                  hintText: '请输入密码',
-                  prefixIcon: Icon(Icons.lock_outline),
-                  suffixIcon: IconButton(
-                      icon: Icon(Icons.remove_red_eye), onPressed: () {})),
-              keyboardType: TextInputType.number,
+                hintText: '请输入密码',
+                prefixIcon: Icon(Icons.lock_outline),
+                suffixIcon: IconButton(
+                  icon: _showPassword
+                      ? Icon(Icons.remove_red_eye)
+                      : Icon(Icons.visibility_off),
+                  onPressed: () {
+                    setState(() {
+                      this._showPassword = !this._showPassword;
+                    });
+                  },
+                ),
+              ),
+              obscureText: _showPassword,
+              maxLength: 16,
             ),
             padding: EdgeInsets.fromLTRB(24.0, 28.0, 24.0, 0.0),
           ),

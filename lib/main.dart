@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'views/index.dart';
 import 'views/login.dart';
+import 'views/message.dart';
 
 void main() => runApp(new MyApp());
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/login': (_) => Login(),
         '/index': (_) => Index(),
+        '/message': (_) => Message(),
       },
     );
   }
